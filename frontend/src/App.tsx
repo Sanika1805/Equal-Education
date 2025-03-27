@@ -1,13 +1,16 @@
 import React from 'react';
 import AuthenticationPage from './pages/AuthenticationPage';
-import './App.css';
+import { ThemeProvider } from './context/ThemeContext';
+import './styles/theme.css';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <AuthenticationPage />
-    </div>
+    <ThemeProvider>
+      <div className="app">
+        <AuthenticationPage />
+      </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
