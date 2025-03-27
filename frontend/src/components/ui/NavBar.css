@@ -46,6 +46,34 @@
   font-weight: 600;
 }
 
+.classroom-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.classroom-button:hover {
+  background-color: #3367d6;
+}
+
+.classroom-button::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09v6.82L12 21 1 15.82V9l11-6z'/%3E%3Cpath d='M12 12l7-3.82L12 4 5 8.18 12 12z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .navbar {
