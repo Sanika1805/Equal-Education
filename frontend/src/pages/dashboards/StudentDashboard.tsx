@@ -13,6 +13,11 @@ import {
   FileText,
   Globe,
   Library,
+  Home,
+  MessageCircle,
+  Info,
+  Phone,
+  Mail,
   LucideIcon
 } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
@@ -50,34 +55,98 @@ const AcademicSections = [
     icon: <Book className="w-6 h-6" />,
     features: [
       {
-        title: 'Classroom Management',
-        description: 'Interactive virtual classrooms managed by parents or volunteer teachers. Access to age-appropriate learning materials, educational games, and basic skill development tools. Regular progress tracking and personalized learning paths.',
+        title: 'Introduction & Mission',
+        description: 'Welcome to the Junior Section! Our mission is to reconnect young students with education through personalized offline teaching by dedicated student volunteers from your local region.',
         icon: <Users />,
         extraInfo: {
-          title: 'Learning Environment Features:',
+          title: 'Key Highlights:',
           points: [
-            'Safe and moderated online learning spaces',
-            'Interactive educational games and activities',
-            'Basic computer skills development',
-            'Regular parent-teacher communication',
-            'Foundational skills assessment tools',
-            'Personalized homework assistance'
+            'Local volunteer-based teaching support',
+            'Personalized learning approach',
+            'Community-driven education system',
+            'Safe and nurturing learning environment',
+            'Regular progress monitoring',
+            'Parent-teacher collaboration'
           ]
         }
       },
       {
-        title: 'Student Collaboration',
-        description: 'Engaging discussion boards and collaborative projects designed for young learners. Foster teamwork, communication skills, and creative thinking through guided group activities.',
+        title: 'Offline Teaching Network',
+        description: 'Connect with qualified volunteers from higher education sections who are ready to teach in your area. Our system matches students with nearby volunteers for effective face-to-face learning.',
+        icon: <GraduationCap />,
+        extraInfo: {
+          title: 'Volunteer Support:',
+          points: [
+            'Local volunteer matching system',
+            'Qualified higher section students as teachers',
+            'Regular offline classes',
+            'Progress tracking by volunteers',
+            'Safe learning environment',
+            'Community engagement opportunities'
+          ]
+        }
+      },
+      {
+        title: 'Virtual Classroom Hub',
+        description: 'Access AI-powered Google Classroom integration for enhanced learning. Join virtual classrooms managed by volunteers and participate in interactive discussion forums.',
         icon: <Globe />,
         extraInfo: {
-          title: 'Collaboration Tools:',
+          title: 'Virtual Features:',
           points: [
-            'Kid-friendly discussion forums',
-            'Group project platforms',
-            'Virtual show and tell sessions',
-            'Peer learning activities',
-            'Creative expression workshops',
-            'Cultural exchange programs'
+            'Google Classroom integration',
+            'AI-based student grouping',
+            'Virtual discussion forums',
+            'Interactive learning sessions',
+            'Region-based class matching',
+            'Subject-wise virtual rooms'
+          ]
+        }
+      },
+      {
+        title: 'Funding & Transparency',
+        description: 'Track how funds are being utilized to support your education through our AI-powered system. View real-time updates on fund allocation and usage.',
+        icon: <Wallet />,
+        extraInfo: {
+          title: 'Financial Features:',
+          points: [
+            'Real-time fund tracking',
+            'Transparent allocation system',
+            'Donation progress tracker',
+            'Fund utilization reports',
+            'Donor engagement updates',
+            'Financial support status'
+          ]
+        }
+      },
+      {
+        title: 'Volunteer & Alumni Portal',
+        description: 'Engage with our network of alumni mentors and volunteers who are committed to guiding students. Monitor progress and receive personalized mentoring support.',
+        icon: <Users />,
+        extraInfo: {
+          title: 'Engagement Features:',
+          points: [
+            'Alumni mentor registration',
+            'Progress monitoring dashboard',
+            'Volunteer-student matching',
+            'Mentorship programs',
+            'Regular guidance sessions',
+            'Community building activities'
+          ]
+        }
+      },
+      {
+        title: 'Student Resources & Support',
+        description: 'Access our AI-powered data management system and connect with educational resources. Get immediate assistance through our support system.',
+        icon: <Library />,
+        extraInfo: {
+          title: 'Support Features:',
+          points: [
+            'Secure data management',
+            'Simple registration process',
+            'Educational resource links',
+            'Live chat support',
+            'YouTube learning channels',
+            'Telegram study groups'
           ]
         }
       }
@@ -312,17 +381,157 @@ const AcademicSectionDetails: React.FC<AcademicSectionDetailsProps> = ({ section
   );
 };
 
+interface ProfileData {
+  name: string;
+  gender: string;
+  dob: string;
+  address: string;
+  financialStatus: string;
+  schoolInfo: string;
+  academicSection: string;
+}
+
 const StudentDashboard: React.FC = () => {
-  const [activeSection, setActiveSection] = useState('profile');
+  const [isProfileSubmitted, setIsProfileSubmitted] = useState(false);
   const [selectedSection, setSelectedSection] = useState(AcademicSections[0]);
-  const [profileData, setProfileData] = useState({
+  const [activeTab, setActiveTab] = useState('academic');
+  const [currentPage, setCurrentPage] = useState('home');
+  const [profileData, setProfileData] = useState<ProfileData>({
     name: '',
     gender: '',
     dob: '',
     address: '',
     financialStatus: '',
-    schoolInfo: ''
+    schoolInfo: '',
+    academicSection: ''
   });
+
+  const handleProfileSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (profileData.academicSection) {
+      const selected = AcademicSections.find(section => section.id === profileData.academicSection);
+      if (selected) {
+        setSelectedSection(selected);
+        setIsProfileSubmitted(true);
+      }
+    }
+  };
+
+  const handleSelectChange = (field: keyof ProfileData) => (value: string) => {
+    setProfileData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const renderResourceSection = () => (
+    <div className="dashboard-section">
+      <div className="section-header">
+        <Lightbulb className="section-icon" />
+        <h2>Free Educational Resources</h2>
+      </div>
+      <div className="resources-grid">
+        <Card className="resource-card">
+          <h3>Video Tutorials</h3>
+          <p>Access curated educational videos from top educators</p>
+          <ul className="resource-list">
+            <li>Subject-specific video lessons</li>
+            <li>Interactive learning content</li>
+            <li>Practice exercises and solutions</li>
+          </ul>
+        </Card>
+        <Card className="resource-card">
+          <h3>Study Materials</h3>
+          <p>Download comprehensive study materials and notes</p>
+          <ul className="resource-list">
+            <li>PDF study guides</li>
+            <li>Practice worksheets</li>
+            <li>Previous year papers</li>
+          </ul>
+        </Card>
+        <Card className="resource-card">
+          <h3>Online Courses</h3>
+          <p>Enroll in free online courses from leading platforms</p>
+          <ul className="resource-list">
+            <li>Self-paced learning</li>
+            <li>Certificate programs</li>
+            <li>Skill development courses</li>
+          </ul>
+        </Card>
+      </div>
+    </div>
+  );
+
+  const renderScholarshipSection = () => (
+    <div className="dashboard-section">
+      <div className="section-header">
+        <Wallet className="section-icon" />
+        <h2>Scholarships & Financial Aid</h2>
+      </div>
+      <div className="scholarship-grid">
+        <Card className="scholarship-card">
+          <h3>Available Scholarships</h3>
+          <p>Personalized scholarship recommendations based on your profile</p>
+          <ul className="scholarship-list">
+            <li>Merit-based scholarships</li>
+            <li>Need-based financial aid</li>
+            <li>Government schemes</li>
+          </ul>
+        </Card>
+        <Card className="scholarship-card">
+          <h3>Application Status</h3>
+          <p>Track your scholarship applications</p>
+          <ul className="scholarship-list">
+            <li>Application deadlines</li>
+            <li>Required documents</li>
+            <li>Selection status</li>
+          </ul>
+        </Card>
+        <Card className="scholarship-card">
+          <h3>Financial Planning</h3>
+          <p>Tools and resources for educational financial planning</p>
+          <ul className="scholarship-list">
+            <li>Education loan options</li>
+            <li>Budget planning</li>
+            <li>Financial counseling</li>
+          </ul>
+        </Card>
+      </div>
+    </div>
+  );
+
+  const renderGrowthTracking = () => (
+    <div className="dashboard-section">
+      <div className="section-header">
+        <PieChart className="section-icon" />
+        <h2>Personal Growth Tracking</h2>
+      </div>
+      <div className="growth-container">
+        <Card className="growth-card">
+          <h3>Academic Progress</h3>
+          <p>Track your academic performance and improvements</p>
+          <div className="growth-chart">
+            <p>Performance Analytics Coming Soon</p>
+          </div>
+        </Card>
+        <Card className="growth-card">
+          <h3>Skill Development</h3>
+          <p>Monitor your skill acquisition and mastery</p>
+          <ul className="growth-list">
+            <li>Technical skills progress</li>
+            <li>Soft skills development</li>
+            <li>Achievement badges</li>
+          </ul>
+        </Card>
+        <Card className="growth-card">
+          <h3>Goals & Milestones</h3>
+          <p>Set and track your educational goals</p>
+          <ul className="growth-list">
+            <li>Short-term objectives</li>
+            <li>Long-term goals</li>
+            <li>Achievement timeline</li>
+          </ul>
+        </Card>
+      </div>
+    </div>
+  );
 
   const renderProfileSetup = () => (
     <Card className="dashboard-section">
@@ -330,177 +539,340 @@ const StudentDashboard: React.FC = () => {
         <User className="section-icon" />
         <h2>Profile Setup</h2>
       </div>
-      <div className="profile-form">
+      <form onSubmit={handleProfileSubmit} className="profile-form">
         <div className="form-group">
           <label htmlFor="name">Full Name</label>
           <Input
             id="name"
             value={profileData.name}
-            onChange={(e) => setProfileData({...profileData, name: e.target.value})}
+            onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
             placeholder="Enter your full name"
           />
         </div>
+        
         <div className="form-group">
           <label htmlFor="gender">Gender</label>
           <Select
             value={profileData.gender}
-            onValueChange={(value) => setProfileData({...profileData, gender: value})}
+            onValueChange={handleSelectChange('gender')}
           >
+            <SelectItem value="">Select Gender</SelectItem>
             <SelectItem value="male">Male</SelectItem>
             <SelectItem value="female">Female</SelectItem>
             <SelectItem value="other">Other</SelectItem>
           </Select>
         </div>
+        
         <div className="form-group">
           <label htmlFor="dob">Date of Birth</label>
           <Input
             id="dob"
             type="date"
             value={profileData.dob}
-            onChange={(e) => setProfileData({...profileData, dob: e.target.value})}
+            onChange={(e) => setProfileData({ ...profileData, dob: e.target.value })}
           />
         </div>
+        
         <div className="form-group">
           <label htmlFor="address">Address</label>
           <Input
             id="address"
             value={profileData.address}
-            onChange={(e) => setProfileData({...profileData, address: e.target.value})}
+            onChange={(e) => setProfileData({ ...profileData, address: e.target.value })}
             placeholder="Enter your address"
           />
         </div>
+        
+        <div className="form-group">
+          <label htmlFor="academicSection">Academic Section</label>
+          <Select
+            value={profileData.academicSection}
+            onValueChange={handleSelectChange('academicSection')}
+          >
+            <SelectItem value="">Select Academic Section</SelectItem>
+            {AcademicSections.map((section) => (
+              <SelectItem key={section.id} value={section.id}>
+                {section.name} ({section.level})
+              </SelectItem>
+            ))}
+          </Select>
+        </div>
+        
         <div className="form-group">
           <label htmlFor="financialStatus">Financial Status</label>
           <Select
             value={profileData.financialStatus}
-            onValueChange={(value) => setProfileData({...profileData, financialStatus: value})}
+            onValueChange={handleSelectChange('financialStatus')}
           >
+            <SelectItem value="">Select Financial Status</SelectItem>
             <SelectItem value="below_poverty">Below Poverty Line</SelectItem>
             <SelectItem value="low_income">Low Income</SelectItem>
             <SelectItem value="middle_income">Middle Income</SelectItem>
             <SelectItem value="high_income">High Income</SelectItem>
           </Select>
         </div>
+        
         <div className="form-group">
           <label htmlFor="schoolInfo">School/College Information</label>
           <Input
             id="schoolInfo"
             value={profileData.schoolInfo}
-            onChange={(e) => setProfileData({...profileData, schoolInfo: e.target.value})}
-            placeholder="Enter your school/college details"
+            onChange={(e) => setProfileData({ ...profileData, schoolInfo: e.target.value })}
+            placeholder="Enter your school or college details"
           />
         </div>
-        <Button className="submit-button">Save Profile</Button>
-      </div>
+
+        <Button type="submit" className="submit-button">
+          Save Profile & Continue to Dashboard
+        </Button>
+      </form>
     </Card>
   );
 
-  const renderAcademicSections = () => {
+  const renderPersonalizedDashboard = () => {
     return (
-      <Card className="dashboard-section">
-        <div className="section-header">
-          <GraduationCap className="section-icon" />
-          <h2>Academic Sections</h2>
-        </div>
-        <div className="academic-sections-container">
-          <div className="sections-nav">
-            {AcademicSections.map((section) => (
-              <button 
-                key={section.id}
-                onClick={() => setSelectedSection(section)}
-                className={`section-nav-button ${selectedSection.id === section.id ? 'active' : ''}`}
-              >
-                {section.icon}
-                <span>{section.name}</span>
-              </button>
-            ))}
+      <div className="personalized-dashboard">
+        <div className="dashboard-header">
+          <div className="user-info">
+            <h2>Welcome, {profileData.name}!</h2>
+            <p className="section-info">{selectedSection.name} - {selectedSection.level}</p>
           </div>
-          
-          <AcademicSectionDetails section={selectedSection} />
+          <Button 
+            onClick={() => setIsProfileSubmitted(false)}
+            className="edit-profile-button"
+          >
+            Edit Profile
+          </Button>
         </div>
-      </Card>
+
+        <div className="dashboard-nav">
+          {[
+            { id: 'academic', label: 'Academic Section', icon: <GraduationCap /> },
+            { id: 'resources', label: 'Resources', icon: <Lightbulb /> },
+            { id: 'scholarships', label: 'Scholarships', icon: <Wallet /> },
+            { id: 'growth', label: 'Growth Tracking', icon: <PieChart /> }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
+            >
+              {tab.icon}
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="dashboard-content">
+          {activeTab === 'academic' && (
+            <div className="features-container">
+              {selectedSection.features.map((feature, index) => (
+                <Card key={feature.title} className="feature-card">
+                  <div className="feature-header">
+                    {feature.icon}
+                    <h3>{feature.title}</h3>
+                  </div>
+                  <p className="feature-description">{feature.description}</p>
+                  {feature.extraInfo && (
+                    <div className="feature-details">
+                      <h4>{feature.extraInfo.title}</h4>
+                      <ul>
+                        {feature.extraInfo.points.map((point, pointIndex) => (
+                          <li key={pointIndex}>{point}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </Card>
+              ))}
+            </div>
+          )}
+          {activeTab === 'resources' && renderResourceSection()}
+          {activeTab === 'scholarships' && renderScholarshipSection()}
+          {activeTab === 'growth' && renderGrowthTracking()}
+        </div>
+      </div>
     );
   };
 
-  const renderResourceSection = () => (
-    <Card className="dashboard-section">
-      <div className="section-header">
-        <Lightbulb className="section-icon" />
-        <h2>Free Educational Resources</h2>
+  const renderMainNav = () => (
+    <div className="main-nav">
+      <div className="nav-logo">
+        <h1>Equal Education</h1>
       </div>
-      <div className="resources-grid">
-        {['YouTube', 'Telegram', 'Online Courses'].map((platform) => (
-          <div key={platform} className="resource-card">
-            <h3>{platform}</h3>
-            <p>Educational Content</p>
-          </div>
-        ))}
-      </div>
-    </Card>
-  );
-
-  const renderScholarshipSection = () => (
-    <Card className="dashboard-section">
-      <div className="section-header">
-        <Wallet className="section-icon" />
-        <h2>Scholarships & Financial Aid</h2>
-      </div>
-      <div className="scholarship-grid">
-        <div className="scholarship-card">
-          <h3>Scholarship Matching</h3>
-          <p>AI-powered scholarship recommendations</p>
-        </div>
-        <div className="scholarship-card">
-          <h3>Educational Loans</h3>
-          <p>Explore financial aid options</p>
-        </div>
-      </div>
-    </Card>
-  );
-
-  const renderGrowthTracking = () => (
-    <Card className="dashboard-section">
-      <div className="section-header">
-        <PieChart className="section-icon" />
-        <h2>Personal Growth Tracking</h2>
-      </div>
-      <div className="growth-chart">
-        <p>AI-Powered Growth Chart Placeholder</p>
-      </div>
-    </Card>
-  );
-
-  const renderDashboardNavigation = () => (
-    <div className="dashboard-nav">
-      {[
-        { key: 'profile', label: 'Profile', icon: <User /> },
-        { key: 'sections', label: 'Academic Sections', icon: <GraduationCap /> },
-        { key: 'resources', label: 'Resources', icon: <Lightbulb /> },
-        { key: 'scholarships', label: 'Scholarships', icon: <Wallet /> },
-        { key: 'growth', label: 'Growth Tracking', icon: <PieChart /> }
-      ].map((nav) => (
+      <div className="nav-links">
         <button 
-          key={nav.key}
-          onClick={() => setActiveSection(nav.key)}
-          className={`nav-button ${activeSection === nav.key ? 'active' : ''}`}
+          className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('home')}
         >
-          {nav.icon}
-          <span>{nav.label}</span>
+          <Home size={20} />
+          <span>Home</span>
         </button>
-      ))}
+        <button 
+          className={`nav-link ${currentPage === 'mentor' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('mentor')}
+        >
+          <MessageCircle size={20} />
+          <span>Virtual Mentor</span>
+        </button>
+        <button 
+          className={`nav-link ${currentPage === 'about' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('about')}
+        >
+          <Info size={20} />
+          <span>About Us</span>
+        </button>
+        <button 
+          className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('contact')}
+        >
+          <Phone size={20} />
+          <span>Contact Us</span>
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderAboutUs = () => (
+    <div className="about-us">
+      <Card className="about-card">
+        <div className="section-header">
+          <Info className="section-icon" />
+          <h2>About Equal Education</h2>
+        </div>
+        <div className="about-content">
+          <div className="mission-section">
+            <h3>Our Mission</h3>
+            <p>Equal Education is dedicated to breaking down barriers in education by connecting students with resources, mentors, and financial support to ensure every student has an equal opportunity to succeed.</p>
+          </div>
+          
+          <div className="vision-section">
+            <h3>Our Vision</h3>
+            <p>We envision a world where every student, regardless of their background or financial status, has access to quality education and the support they need to achieve their academic goals.</p>
+          </div>
+          
+          <div className="values-section">
+            <h3>Our Values</h3>
+            <ul className="values-list">
+              <li>Equal Opportunity for All</li>
+              <li>Community-Driven Support</li>
+              <li>Transparency in Operations</li>
+              <li>Innovation in Education</li>
+              <li>Student-Centric Approach</li>
+            </ul>
+          </div>
+          
+          <div className="team-section">
+            <h3>Our Team</h3>
+            <div className="team-grid">
+              <div className="team-member">
+                <Users size={40} />
+                <h4>Dedicated Volunteers</h4>
+                <p>Our network of student volunteers and mentors</p>
+              </div>
+              <div className="team-member">
+                <Award size={40} />
+                <h4>Expert Educators</h4>
+                <p>Experienced teachers and education specialists</p>
+              </div>
+              <div className="team-member">
+                <Target size={40} />
+                <h4>Support Staff</h4>
+                <p>Administrative and technical support team</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+
+  const renderContactUs = () => (
+    <div className="contact-us">
+      <Card className="contact-card">
+        <div className="section-header">
+          <Phone className="section-icon" />
+          <h2>Contact Us</h2>
+        </div>
+        <div className="contact-content">
+          <div className="contact-info">
+            <h3>Get in Touch</h3>
+            <p>Have questions or need support? We're here to help!</p>
+          </div>
+          
+          <form className="contact-form">
+            <div className="form-group">
+              <label htmlFor="name">Full Name</label>
+              <Input
+                id="name"
+                placeholder="Enter your name"
+                type="text"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <Input
+                id="email"
+                placeholder="Enter your email"
+                type="email"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="subject">Subject</label>
+              <Input
+                id="subject"
+                placeholder="Enter subject"
+                type="text"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="message">Message</label>
+              <textarea
+                id="message"
+                className="contact-textarea"
+                placeholder="Enter your message"
+                rows={5}
+              />
+            </div>
+            
+            <Button type="submit" className="contact-submit">
+              Send Message
+            </Button>
+          </form>
+          
+          <div className="contact-methods">
+            <div className="contact-method">
+              <MessageCircle size={24} />
+              <h4>Chat Support</h4>
+              <p>Available 24/7 for your queries</p>
+            </div>
+            <div className="contact-method">
+              <Mail size={24} />
+              <h4>Email</h4>
+              <p>support@equaleducation.org</p>
+            </div>
+            <div className="contact-method">
+              <Phone size={24} />
+              <h4>Phone</h4>
+              <p>+1 (123) 456-7890</p>
+            </div>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 
   return (
     <div className="student-dashboard">
-      {renderDashboardNavigation()}
-      <div className="dashboard-content">
-        {activeSection === 'profile' && renderProfileSetup()}
-        {activeSection === 'sections' && renderAcademicSections()}
-        {activeSection === 'resources' && renderResourceSection()}
-        {activeSection === 'scholarships' && renderScholarshipSection()}
-        {activeSection === 'growth' && renderGrowthTracking()}
-      </div>
+      {renderMainNav()}
+      {currentPage === 'home' && (
+        !isProfileSubmitted ? renderProfileSetup() : renderPersonalizedDashboard()
+      )}
+      {currentPage === 'about' && renderAboutUs()}
+      {currentPage === 'contact' && renderContactUs()}
     </div>
   );
 };
