@@ -24,6 +24,10 @@ interface Feature {
   title: string;
   description: string;
   icon: React.ReactNode;
+  extraInfo?: {
+    title: string;
+    points: string[];
+  };
 }
 
 interface AcademicSection {
@@ -47,13 +51,35 @@ const AcademicSections = [
     features: [
       {
         title: 'Classroom Management',
-        description: 'Parent or volunteer-managed Google Classroom',
-        icon: <Users />
+        description: 'Interactive virtual classrooms managed by parents or volunteer teachers. Access to age-appropriate learning materials, educational games, and basic skill development tools. Regular progress tracking and personalized learning paths.',
+        icon: <Users />,
+        extraInfo: {
+          title: 'Learning Environment Features:',
+          points: [
+            'Safe and moderated online learning spaces',
+            'Interactive educational games and activities',
+            'Basic computer skills development',
+            'Regular parent-teacher communication',
+            'Foundational skills assessment tools',
+            'Personalized homework assistance'
+          ]
+        }
       },
       {
         title: 'Student Collaboration',
-        description: 'Discussion boards and project work',
-        icon: <Globe />
+        description: 'Engaging discussion boards and collaborative projects designed for young learners. Foster teamwork, communication skills, and creative thinking through guided group activities.',
+        icon: <Globe />,
+        extraInfo: {
+          title: 'Collaboration Tools:',
+          points: [
+            'Kid-friendly discussion forums',
+            'Group project platforms',
+            'Virtual show and tell sessions',
+            'Peer learning activities',
+            'Creative expression workshops',
+            'Cultural exchange programs'
+          ]
+        }
       }
     ]
   },
@@ -65,18 +91,51 @@ const AcademicSections = [
     features: [
       {
         title: 'Advanced Learning',
-        description: 'Online tests and reward system',
-        icon: <Target />
+        description: 'Comprehensive online testing system with immediate feedback and rewards. Track progress across subjects, identify areas for improvement, and celebrate achievements through a gamified learning experience.',
+        icon: <Target />,
+        extraInfo: {
+          title: 'Learning Features:',
+          points: [
+            'Subject-wise practice tests',
+            'Adaptive learning paths',
+            'Performance analytics',
+            'Virtual badges and rewards',
+            'Competitive challenges',
+            'Parent progress reports'
+          ]
+        }
       },
       {
         title: 'Scholarship Support',
-        description: 'Personalized scholarship recommendations',
-        icon: <Award />
+        description: 'Early scholarship guidance and financial planning support. Access to a database of age-appropriate scholarships, merit-based opportunities, and educational funding resources.',
+        icon: <Award />,
+        extraInfo: {
+          title: 'Scholarship Resources:',
+          points: [
+            'Government scheme information',
+            'Merit-based opportunities',
+            'Sports and cultural scholarships',
+            'Financial literacy education',
+            'Application assistance',
+            'Document preparation guidance'
+          ]
+        }
       },
       {
         title: 'Career Exploration',
-        description: 'Career path guidance and counseling',
-        icon: <FileText />
+        description: 'Early career guidance and skill assessment tools. Explore different career paths through interactive sessions, virtual field trips, and expert talks designed for middle school students.',
+        icon: <FileText />,
+        extraInfo: {
+          title: 'Career Discovery Tools:',
+          points: [
+            'Interest assessment tests',
+            'Virtual career fairs',
+            'Industry expert sessions',
+            'Skill development workshops',
+            'Parent guidance sessions',
+            'Future planning resources'
+          ]
+        }
       }
     ]
   },
@@ -88,18 +147,51 @@ const AcademicSections = [
     features: [
       {
         title: 'Stream-based Education',
-        description: 'Specialized resources for Science, Commerce, Arts',
-        icon: <Book />
+        description: 'Comprehensive resources tailored for Science, Commerce, and Arts streams. Access specialized study materials, practical guides, and stream-specific career counseling to excel in your chosen field.',
+        icon: <Book />,
+        extraInfo: {
+          title: 'Stream-specific Resources:',
+          points: [
+            'Detailed subject guides',
+            'Practical experiment videos',
+            'Industry case studies',
+            'Project assistance',
+            'Expert faculty support',
+            'Stream transition guidance'
+          ]
+        }
       },
       {
         title: 'Exam Preparation',
-        description: 'Career updates and entrance exam resources',
-        icon: <GraduationCap />
+        description: 'Intensive preparation resources for board exams and competitive entrance tests. Access mock tests, previous year papers, and expert guidance for JEE, NEET, CLAT, and other competitive exams.',
+        icon: <GraduationCap />,
+        extraInfo: {
+          title: 'Exam Preparation Tools:',
+          points: [
+            'Mock test series',
+            'Previous year analysis',
+            'Expert doubt clearing',
+            'Time management tips',
+            'Stress management sessions',
+            'Performance tracking'
+          ]
+        }
       },
       {
         title: 'Scholarship Support',
-        description: 'AI-driven scholarship and loan recommendations',
-        icon: <Award />
+        description: 'Advanced AI-driven scholarship matching system and comprehensive financial aid guidance. Get personalized recommendations for higher education funding, including international opportunities.',
+        icon: <Award />,
+        extraInfo: {
+          title: 'Financial Aid Resources:',
+          points: [
+            'International scholarship database',
+            'Education loan guidance',
+            'Merit-based opportunities',
+            'Research fellowship information',
+            'Application strategy planning',
+            'Interview preparation'
+          ]
+        }
       }
     ]
   },
@@ -111,18 +203,51 @@ const AcademicSections = [
     features: [
       {
         title: 'Opportunity Hub',
-        description: 'Scholarships and internship information',
-        icon: <Globe />
+        description: 'Comprehensive platform for discovering scholarships, internships, and research opportunities. Connect with universities, research institutions, and industry partners for advanced academic and professional growth.',
+        icon: <Globe />,
+        extraInfo: {
+          title: 'Opportunity Resources:',
+          points: [
+            'Global university connections',
+            'Research internship programs',
+            'Industry collaboration projects',
+            'Publication opportunities',
+            'Conference participation',
+            'Academic networking events'
+          ]
+        }
       },
       {
         title: 'Mentorship Program',
-        description: 'Mentor younger students, build community',
-        icon: <Users />
+        description: 'Dual-benefit mentorship system where you can both receive guidance from industry experts and mentor younger students. Build leadership skills while giving back to the community.',
+        icon: <Users />,
+        extraInfo: {
+          title: 'Mentorship Benefits:',
+          points: [
+            'Industry expert mentoring',
+            'Peer mentoring opportunities',
+            'Leadership skill development',
+            'Community building activities',
+            'Social impact projects',
+            'Professional networking'
+          ]
+        }
       },
       {
         title: 'Study Resources',
-        description: 'Free study materials and mock exams',
-        icon: <Library />
+        description: 'Advanced study materials and exam preparation resources for higher education. Access research papers, academic journals, and specialized course materials across various disciplines.',
+        icon: <Library />,
+        extraInfo: {
+          title: 'Advanced Resources:',
+          points: [
+            'Digital library access',
+            'Research methodology guides',
+            'Academic writing support',
+            'Thesis preparation tools',
+            'Citation management',
+            'Publication guidance'
+          ]
+        }
       }
     ]
   }
@@ -138,6 +263,8 @@ const AcademicSectionDetails: React.FC<AcademicSectionDetailsProps> = ({ section
       </div>
     );
   }
+
+  const currentFeature = section.features[activeFeature];
 
   return (
     <div className="section-details">
@@ -164,52 +291,19 @@ const AcademicSectionDetails: React.FC<AcademicSectionDetailsProps> = ({ section
       
       <div className="feature-details">
         <h3 className="feature-title">
-          {section.features[activeFeature]?.title || 'Feature Details'}
+          {currentFeature?.title || 'Feature Details'}
         </h3>
         <p className="feature-description">
-          {section.features[activeFeature]?.description || 'No description available'}
+          {currentFeature?.description || 'No description available'}
         </p>
         
-        {section.id === 'junior' && activeFeature === 0 && (
+        {currentFeature?.extraInfo && (
           <div className="feature-extras">
-            <h4>Classroom Management Details:</h4>
+            <h4>{currentFeature.extraInfo?.title}</h4>
             <ul>
-              <li>Parent/volunteer managed classrooms</li>
-              <li>Connect students with teachers</li>
-              <li>Regional volunteer support groups</li>
-            </ul>
-          </div>
-        )}
-        
-        {section.id === 'middle' && activeFeature === 1 && (
-          <div className="feature-extras">
-            <h4>Scholarship Support:</h4>
-            <ul>
-              <li>AI-powered financial analysis</li>
-              <li>Personalized scholarship matching</li>
-              <li>Tailored recommendations</li>
-            </ul>
-          </div>
-        )}
-        
-        {section.id === 'higher' && activeFeature === 0 && (
-          <div className="feature-extras">
-            <h4>Stream-based Resources:</h4>
-            <ul>
-              <li>Science Stream Specialization</li>
-              <li>Commerce Stream Guidance</li>
-              <li>Arts Stream Support</li>
-            </ul>
-          </div>
-        )}
-        
-        {section.id === 'graduation' && activeFeature === 1 && (
-          <div className="feature-extras">
-            <h4>Mentorship Program:</h4>
-            <ul>
-              <li>Guide younger students</li>
-              <li>Build community connections</li>
-              <li>Social responsibility initiative</li>
+              {currentFeature.extraInfo?.points?.map((point: string, index: number) => (
+                <li key={index}>{point}</li>
+              ))}
             </ul>
           </div>
         )}
