@@ -6,38 +6,221 @@ import {
   Trophy, 
   Lightbulb, 
   Wallet, 
-  PieChart 
+  PieChart,
+  Users,
+  Target,
+  Award,
+  FileText,
+  Globe,
+  Library,
+  LucideIcon
 } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
 import { Select, SelectItem } from '../../components/ui/Select';
 
+interface Feature {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
+interface AcademicSection {
+  id: string;
+  name: string;
+  level: string;
+  icon: React.ReactNode;
+  features: Feature[];
+}
+
+interface AcademicSectionDetailsProps {
+  section: AcademicSection;
+}
+
 const AcademicSections = [
-  { 
-    name: 'Juniors', 
-    range: 'Up to 4th Standard',
-    icon: <Book className="w-6 h-6" />
+  {
+    id: 'junior',
+    name: 'Junior Section',
+    level: 'Up to 4th Standard',
+    icon: <Book className="w-6 h-6" />,
+    features: [
+      {
+        title: 'Classroom Management',
+        description: 'Parent or volunteer-managed Google Classroom',
+        icon: <Users />
+      },
+      {
+        title: 'Student Collaboration',
+        description: 'Discussion boards and project work',
+        icon: <Globe />
+      }
+    ]
   },
-  { 
-    name: 'Middle School', 
-    range: '5th – 10th Standard',
-    icon: <GraduationCap className="w-6 h-6" />
+  {
+    id: 'middle',
+    name: 'Middle School',
+    level: '5th to 8th Standard',
+    icon: <GraduationCap className="w-6 h-6" />,
+    features: [
+      {
+        title: 'Advanced Learning',
+        description: 'Online tests and reward system',
+        icon: <Target />
+      },
+      {
+        title: 'Scholarship Support',
+        description: 'Personalized scholarship recommendations',
+        icon: <Award />
+      },
+      {
+        title: 'Career Exploration',
+        description: 'Career path guidance and counseling',
+        icon: <FileText />
+      }
+    ]
   },
-  { 
-    name: 'Higher Secondary', 
-    range: '11th & 12th Standard',
-    icon: <Trophy className="w-6 h-6" />
+  {
+    id: 'higher',
+    name: 'Higher Secondary',
+    level: '11th & 12th Standard',
+    icon: <Library className="w-6 h-6" />,
+    features: [
+      {
+        title: 'Stream-based Education',
+        description: 'Specialized resources for Science, Commerce, Arts',
+        icon: <Book />
+      },
+      {
+        title: 'Exam Preparation',
+        description: 'Career updates and entrance exam resources',
+        icon: <GraduationCap />
+      },
+      {
+        title: 'Scholarship Support',
+        description: 'AI-driven scholarship and loan recommendations',
+        icon: <Award />
+      }
+    ]
   },
-  { 
-    name: 'Graduation & Masters', 
-    range: 'College Level',
-    icon: <User className="w-6 h-6" />
+  {
+    id: 'graduation',
+    name: 'Graduation & Masters',
+    level: 'College Level',
+    icon: <Users className="w-6 h-6" />,
+    features: [
+      {
+        title: 'Opportunity Hub',
+        description: 'Scholarships and internship information',
+        icon: <Globe />
+      },
+      {
+        title: 'Mentorship Program',
+        description: 'Mentor younger students, build community',
+        icon: <Users />
+      },
+      {
+        title: 'Study Resources',
+        description: 'Free study materials and mock exams',
+        icon: <Library />
+      }
+    ]
   }
 ];
 
+const AcademicSectionDetails: React.FC<AcademicSectionDetailsProps> = ({ section }) => {
+  const [activeFeature, setActiveFeature] = useState(0);
+
+  if (!section || !section.features) {
+    return (
+      <div className="section-details">
+        <p>No section details available</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="section-details">
+      <div className="section-info">
+        <h2 className="section-title">
+          {section.icon}
+          <span>{section.name || 'Section Name'}</span>
+        </h2>
+        <p className="section-level">{section.level || 'Academic Level'}</p>
+        
+        <div className="features-list">
+          {section.features.map((feature: Feature, index: number) => (
+            <button
+              key={feature.title || `feature-${index}`}
+              onClick={() => setActiveFeature(index)}
+              className={`feature-button ${activeFeature === index ? 'active' : ''}`}
+            >
+              {feature.icon}
+              <span>{feature.title || 'Feature'}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <div className="feature-details">
+        <h3 className="feature-title">
+          {section.features[activeFeature]?.title || 'Feature Details'}
+        </h3>
+        <p className="feature-description">
+          {section.features[activeFeature]?.description || 'No description available'}
+        </p>
+        
+        {section.id === 'junior' && activeFeature === 0 && (
+          <div className="feature-extras">
+            <h4>Classroom Management Details:</h4>
+            <ul>
+              <li>Parent/volunteer managed classrooms</li>
+              <li>Connect students with teachers</li>
+              <li>Regional volunteer support groups</li>
+            </ul>
+          </div>
+        )}
+        
+        {section.id === 'middle' && activeFeature === 1 && (
+          <div className="feature-extras">
+            <h4>Scholarship Support:</h4>
+            <ul>
+              <li>AI-powered financial analysis</li>
+              <li>Personalized scholarship matching</li>
+              <li>Tailored recommendations</li>
+            </ul>
+          </div>
+        )}
+        
+        {section.id === 'higher' && activeFeature === 0 && (
+          <div className="feature-extras">
+            <h4>Stream-based Resources:</h4>
+            <ul>
+              <li>Science Stream Specialization</li>
+              <li>Commerce Stream Guidance</li>
+              <li>Arts Stream Support</li>
+            </ul>
+          </div>
+        )}
+        
+        {section.id === 'graduation' && activeFeature === 1 && (
+          <div className="feature-extras">
+            <h4>Mentorship Program:</h4>
+            <ul>
+              <li>Guide younger students</li>
+              <li>Build community connections</li>
+              <li>Social responsibility initiative</li>
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const StudentDashboard: React.FC = () => {
   const [activeSection, setActiveSection] = useState('profile');
+  const [selectedSection, setSelectedSection] = useState(AcademicSections[0]);
   const [profileData, setProfileData] = useState({
     name: '',
     gender: '',
@@ -118,25 +301,32 @@ const StudentDashboard: React.FC = () => {
     </Card>
   );
 
-  const renderAcademicSections = () => (
-    <Card className="dashboard-section">
-      <div className="section-header">
-        <GraduationCap className="section-icon" />
-        <h2>Academic Sections</h2>
-      </div>
-      <div className="sections-grid">
-        {AcademicSections.map((section) => (
-          <div key={section.name} className="section-card">
-            {section.icon}
-            <div className="section-info">
-              <h3>{section.name}</h3>
-              <p>{section.range}</p>
-            </div>
+  const renderAcademicSections = () => {
+    return (
+      <Card className="dashboard-section">
+        <div className="section-header">
+          <GraduationCap className="section-icon" />
+          <h2>Academic Sections</h2>
+        </div>
+        <div className="academic-sections-container">
+          <div className="sections-nav">
+            {AcademicSections.map((section) => (
+              <button 
+                key={section.id}
+                onClick={() => setSelectedSection(section)}
+                className={`section-nav-button ${selectedSection.id === section.id ? 'active' : ''}`}
+              >
+                {section.icon}
+                <span>{section.name}</span>
+              </button>
+            ))}
           </div>
-        ))}
-      </div>
-    </Card>
-  );
+          
+          <AcademicSectionDetails section={selectedSection} />
+        </div>
+      </Card>
+    );
+  };
 
   const renderResourceSection = () => (
     <Card className="dashboard-section">
