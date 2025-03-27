@@ -18,7 +18,12 @@ import {
   Info,
   Phone,
   Mail,
-  LucideIcon
+  LucideIcon,
+  Calendar,
+  UserPlus,
+  HelpCircle,
+  FileQuestion,
+  MessageSquare
 } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -869,10 +874,107 @@ const StudentDashboard: React.FC = () => {
     <div className="student-dashboard">
       {renderMainNav()}
       {currentPage === 'home' && (
-        !isProfileSubmitted ? renderProfileSetup() : renderPersonalizedDashboard()
+        <>
+          {!isProfileSubmitted ? (
+            renderProfileSetup()
+          ) : (
+            <>
+              <div className="dashboard-nav">
+                {[
+                  { id: 'academic', label: 'Academic Section', icon: <GraduationCap /> },
+                  { id: 'resources', label: 'Resources', icon: <Lightbulb /> },
+                  { id: 'scholarships', label: 'Scholarships', icon: <Wallet /> },
+                  { id: 'growth', label: 'Growth Tracking', icon: <PieChart /> }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
+                  >
+                    {tab.icon}
+                    <span>{tab.label}</span>
+                  </button>
+                ))}
+              </div>
+              {renderPersonalizedDashboard()}
+            </>
+          )}
+        </>
       )}
-      {currentPage === 'about' && renderAboutUs()}
-      {currentPage === 'contact' && renderContactUs()}
+      {currentPage === 'mentor' && (
+        <>
+          <div className="dashboard-nav">
+            {[
+              { id: 'find', label: 'Find Mentor', icon: <Users /> },
+              { id: 'sessions', label: 'My Sessions', icon: <MessageCircle /> },
+              { id: 'schedule', label: 'Schedule', icon: <Calendar /> },
+              { id: 'resources', label: 'Resources', icon: <FileText /> }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
+              >
+                {tab.icon}
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+          <div className="dashboard-content">
+            <Card className="dashboard-section">
+              <div className="section-header">
+                <MessageCircle className="section-icon" />
+                <h2>Virtual Mentor Dashboard</h2>
+              </div>
+              <p>Virtual Mentor section is under development. Coming soon!</p>
+            </Card>
+          </div>
+        </>
+      )}
+      {currentPage === 'about' && (
+        <>
+          <div className="dashboard-nav">
+            {[
+              { id: 'mission', label: 'Our Mission', icon: <Target /> },
+              { id: 'team', label: 'Our Team', icon: <Users /> },
+              { id: 'impact', label: 'Our Impact', icon: <Award /> },
+              { id: 'join', label: 'Join Us', icon: <UserPlus /> }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
+              >
+                {tab.icon}
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+          {renderAboutUs()}
+        </>
+      )}
+      {currentPage === 'contact' && (
+        <>
+          <div className="dashboard-nav">
+            {[
+              { id: 'message', label: 'Send Message', icon: <Mail /> },
+              { id: 'support', label: 'Support', icon: <HelpCircle /> },
+              { id: 'faq', label: 'FAQ', icon: <FileQuestion /> },
+              { id: 'feedback', label: 'Feedback', icon: <MessageSquare /> }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
+              >
+                {tab.icon}
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+          {renderContactUs()}
+        </>
+      )}
     </div>
   );
 };
