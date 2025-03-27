@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button';
 import { Select, SelectItem } from '../components/ui/Select';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import StudentDashboard from './dashboards/StudentDashboard';
+import TeacherDashboard from './dashboards/TeacherDashboard';
 import '../components/ui/styles.css';
 
 const UserRoles = [
@@ -16,6 +17,13 @@ const UserRoles = [
   'Donor'
 ];
 
+interface User {
+  id: string;
+  email: string;
+  role: string;
+  name: string;
+}
+
 // Mock authentication service
 const AuthService = {
   users: [] as Array<{
@@ -23,6 +31,7 @@ const AuthService = {
     password: string;
     role: string;
     id: string;
+    name: string;
     createdAt: Date;
   }>,
   
@@ -44,6 +53,7 @@ const AuthService = {
       password, 
       role,
       id: Math.random().toString(),
+      name: email.split('@')[0], // Using email prefix as default name
       createdAt: new Date()
     };
     this.users.push(newUser);
@@ -55,12 +65,6 @@ const AuthService = {
     return user !== undefined;
   }
 };
-
-interface User {
-  email: string;
-  role: string;
-  id: string;
-}
 
 const AuthenticationPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -117,6 +121,7 @@ const AuthenticationPage: React.FC = () => {
     return (
       <DashboardLayout userRole={user.role} onLogout={handleLogout}>
         {user.role === 'Student' && <StudentDashboard />}
+        {user.role === 'Teacher' && <TeacherDashboard user={user} />}
       </DashboardLayout>
     );
   }
