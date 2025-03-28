@@ -29,6 +29,7 @@ import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
 import { Select, SelectItem } from '../../components/ui/Select';
+import './StudentDashboard.css';
 
 interface Feature {
   title: string;
@@ -396,13 +397,21 @@ interface ProfileData {
   academicSection: string;
 }
 
-const StudentDashboard: React.FC = () => {
+interface StudentDashboardProps {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
+}
+
+const StudentDashboard: React.FC<StudentDashboardProps> = ({ user }) => {
   const [isProfileSubmitted, setIsProfileSubmitted] = useState(false);
   const [selectedSection, setSelectedSection] = useState(AcademicSections[0]);
   const [activeTab, setActiveTab] = useState('academic');
   const [currentPage, setCurrentPage] = useState('home');
   const [profileData, setProfileData] = useState<ProfileData>({
-    name: '',
+    name: user.name || '',
     gender: '',
     dob: '',
     address: '',
@@ -422,9 +431,56 @@ const StudentDashboard: React.FC = () => {
     }
   };
 
-  const handleSelectChange = (field: keyof ProfileData) => (value: string) => {
-    setProfileData(prev => ({ ...prev, [field]: value }));
+  const handleLogout = () => {
+    // Clear any stored authentication data
+    localStorage.removeItem('user');
+    // Redirect to the authentication page
+    window.location.href = '/';
   };
+
+  const renderMainNav = () => (
+    <div className="main-nav">
+      <div className="nav-logo">
+        <h1>Equal Education</h1>
+      </div>
+      <div className="nav-links">
+        <button
+          className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('home')}
+        >
+          <Home size={20} />
+          <span>Home</span>
+        </button>
+        <button
+          className={`nav-link ${currentPage === 'mentor' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('mentor')}
+        >
+          <MessageCircle size={20} />
+          <span>Virtual Mentor</span>
+        </button>
+        <button
+          className={`nav-link ${currentPage === 'about' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('about')}
+        >
+          <Info size={20} />
+          <span>About Us</span>
+        </button>
+        <button
+          className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('contact')}
+        >
+          <Phone size={20} />
+          <span>Contact Us</span>
+        </button>
+        <button
+          className="nav-link logout-button"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  );
 
   const renderResourceSection = () => (
     <div className="dashboard-section">
@@ -538,6 +594,65 @@ const StudentDashboard: React.FC = () => {
     </div>
   );
 
+  const renderAcademicSection = () => (
+    <div className="dashboard-container">
+      <h2 className="dashboard-title">Academic Section</h2>
+      <div className="dashboard-grid">
+        <div className="dashboard-card">
+          <h3>Current Courses</h3>
+          <div className="course-list">
+            <div className="course-item">
+              <h4>Mathematics</h4>
+              <p>Progress: 75%</p>
+              <button className="view-button">View Details</button>
+            </div>
+            <div className="course-item">
+              <h4>Science</h4>
+              <p>Progress: 60%</p>
+              <button className="view-button">View Details</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="dashboard-card">
+          <h3>Study Materials</h3>
+          <div className="resource-list">
+            <div className="resource-item">
+              <h4>Course Notes</h4>
+              <p>Access your study materials</p>
+              <button className="view-button">Access</button>
+            </div>
+            <div className="resource-item">
+              <h4>Practice Tests</h4>
+              <p>Take practice tests</p>
+              <button className="view-button">Start Test</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="dashboard-card">
+          <h3>Performance Overview</h3>
+          <div className="performance-stats">
+            <div className="stat-item">
+              <h4>Overall Grade</h4>
+              <div className="progress-bar">
+                <div className="progress" style={{ width: '75%' }}></div>
+              </div>
+              <p>A (75%)</p>
+            </div>
+            <div className="stat-item">
+              <h4>Attendance</h4>
+              <div className="progress-bar">
+                <div className="progress" style={{ width: '90%' }}></div>
+              </div>
+              <p>90% Present</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderProfileSetup = () => (
     <Card className="dashboard-section">
       <div className="section-header">
@@ -559,7 +674,7 @@ const StudentDashboard: React.FC = () => {
           <label htmlFor="gender">Gender</label>
           <Select
             value={profileData.gender}
-            onValueChange={handleSelectChange('gender')}
+            onValueChange={(value) => setProfileData({ ...profileData, gender: value })}
           >
             <SelectItem value="">Select Gender</SelectItem>
             <SelectItem value="male">Male</SelectItem>
@@ -592,7 +707,7 @@ const StudentDashboard: React.FC = () => {
           <label htmlFor="academicSection">Academic Section</label>
           <Select
             value={profileData.academicSection}
-            onValueChange={handleSelectChange('academicSection')}
+            onValueChange={(value) => setProfileData({ ...profileData, academicSection: value })}
           >
             <SelectItem value="">Select Academic Section</SelectItem>
             {AcademicSections.map((section) => (
@@ -607,7 +722,7 @@ const StudentDashboard: React.FC = () => {
           <label htmlFor="financialStatus">Financial Status</label>
           <Select
             value={profileData.financialStatus}
-            onValueChange={handleSelectChange('financialStatus')}
+            onValueChange={(value) => setProfileData({ ...profileData, financialStatus: value })}
           >
             <SelectItem value="">Select Financial Status</SelectItem>
             <SelectItem value="below_poverty">Below Poverty Line</SelectItem>
@@ -635,236 +750,84 @@ const StudentDashboard: React.FC = () => {
   );
 
   const renderPersonalizedDashboard = () => {
-    return (
-      <div className="personalized-dashboard">
-        <div className="dashboard-header">
-          <div className="user-info">
-            <h2>Welcome, {profileData.name}!</h2>
-            <p className="section-info">{selectedSection.name} - {selectedSection.level}</p>
-          </div>
-          <Button 
-            onClick={() => setIsProfileSubmitted(false)}
-            className="edit-profile-button"
-          >
-            Edit Profile
-          </Button>
-        </div>
-
-        <div className="dashboard-nav">
-          {[
-            { id: 'academic', label: 'Academic Section', icon: <GraduationCap /> },
-            { id: 'resources', label: 'Resources', icon: <Lightbulb /> },
-            { id: 'scholarships', label: 'Scholarships', icon: <Wallet /> },
-            { id: 'growth', label: 'Growth Tracking', icon: <PieChart /> }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
-            >
-              {tab.icon}
-              <span>{tab.label}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="dashboard-content">
-          {activeTab === 'academic' && (
-            <div className="features-container">
-              {selectedSection.features.map((feature, index) => (
-                <Card key={feature.title} className="feature-card">
-                  <div className="feature-header">
-                    {feature.icon}
-                    <h3>{feature.title}</h3>
-                  </div>
-                  <p className="feature-description">{feature.description}</p>
-                  {feature.extraInfo && (
-                    <div className="feature-details">
-                      <h4>{feature.extraInfo.title}</h4>
-                      <ul>
-                        {feature.extraInfo.points.map((point, pointIndex) => (
-                          <li key={pointIndex}>{point}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </Card>
-              ))}
-            </div>
-          )}
-          {activeTab === 'resources' && renderResourceSection()}
-          {activeTab === 'scholarships' && renderScholarshipSection()}
-          {activeTab === 'growth' && renderGrowthTracking()}
-        </div>
-      </div>
-    );
+    switch (activeTab) {
+      case 'academic':
+        return renderAcademicSection();
+      case 'resources':
+        return renderResourceSection();
+      case 'scholarships':
+        return renderScholarshipSection();
+      case 'growth':
+        return renderGrowthTracking();
+      default:
+        return null;
+    }
   };
 
-  const renderMainNav = () => (
-    <div className="main-nav">
-      <div className="nav-logo">
-        <h1>Equal Education</h1>
-      </div>
-      <div className="nav-links">
-        <button 
-          className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
-          onClick={() => setCurrentPage('home')}
-        >
-          <Home size={20} />
-          <span>Home</span>
-        </button>
-        <button 
-          className={`nav-link ${currentPage === 'mentor' ? 'active' : ''}`}
-          onClick={() => setCurrentPage('mentor')}
-        >
-          <MessageCircle size={20} />
-          <span>Virtual Mentor</span>
-        </button>
-        <button 
-          className={`nav-link ${currentPage === 'about' ? 'active' : ''}`}
-          onClick={() => setCurrentPage('about')}
-        >
-          <Info size={20} />
-          <span>About Us</span>
-        </button>
-        <button 
-          className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
-          onClick={() => setCurrentPage('contact')}
-        >
-          <Phone size={20} />
-          <span>Contact Us</span>
-        </button>
-      </div>
-    </div>
-  );
-
   const renderAboutUs = () => (
-    <div className="about-us">
-      <Card className="about-card">
+    <div className="dashboard-content">
+      <Card className="dashboard-section">
         <div className="section-header">
           <Info className="section-icon" />
           <h2>About Equal Education</h2>
         </div>
         <div className="about-content">
-          <div className="mission-section">
-            <h3>Our Mission</h3>
-            <p>Equal Education is dedicated to breaking down barriers in education by connecting students with resources, mentors, and financial support to ensure every student has an equal opportunity to succeed.</p>
-          </div>
+          <h3>Our Mission</h3>
+          <p>To provide equal educational opportunities to all students regardless of their socioeconomic background.</p>
           
-          <div className="vision-section">
-            <h3>Our Vision</h3>
-            <p>We envision a world where every student, regardless of their background or financial status, has access to quality education and the support they need to achieve their academic goals.</p>
-          </div>
+          <h3>Our Vision</h3>
+          <p>Creating a world where quality education is accessible to every student, empowering them to achieve their full potential.</p>
           
-          <div className="values-section">
-            <h3>Our Values</h3>
-            <ul className="values-list">
-              <li>Equal Opportunity for All</li>
-              <li>Community-Driven Support</li>
-              <li>Transparency in Operations</li>
-              <li>Innovation in Education</li>
-              <li>Student-Centric Approach</li>
-            </ul>
-          </div>
-          
-          <div className="team-section">
-            <h3>Our Team</h3>
-            <div className="team-grid">
-              <div className="team-member">
-                <Users size={40} />
-                <h4>Dedicated Volunteers</h4>
-                <p>Our network of student volunteers and mentors</p>
-              </div>
-              <div className="team-member">
-                <Award size={40} />
-                <h4>Expert Educators</h4>
-                <p>Experienced teachers and education specialists</p>
-              </div>
-              <div className="team-member">
-                <Target size={40} />
-                <h4>Support Staff</h4>
-                <p>Administrative and technical support team</p>
-              </div>
-            </div>
-          </div>
+          <h3>What We Do</h3>
+          <ul>
+            <li>Connect students with qualified volunteer teachers</li>
+            <li>Provide access to quality educational resources</li>
+            <li>Facilitate scholarship opportunities</li>
+            <li>Offer mentorship and guidance</li>
+            <li>Track and support student growth</li>
+          </ul>
         </div>
       </Card>
     </div>
   );
 
   const renderContactUs = () => (
-    <div className="contact-us">
-      <Card className="contact-card">
+    <div className="dashboard-content">
+      <Card className="dashboard-section">
         <div className="section-header">
-          <Phone className="section-icon" />
+          <Mail className="section-icon" />
           <h2>Contact Us</h2>
         </div>
         <div className="contact-content">
           <div className="contact-info">
             <h3>Get in Touch</h3>
-            <p>Have questions or need support? We're here to help!</p>
+            <p>Have questions or need assistance? We're here to help!</p>
+            <ul>
+              <li>
+                <Mail size={16} />
+                <span>support@equaleducation.org</span>
+              </li>
+              <li>
+                <Phone size={16} />
+                <span>+1 (555) 123-4567</span>
+              </li>
+            </ul>
           </div>
-          
           <form className="contact-form">
             <div className="form-group">
-              <label htmlFor="name">Full Name</label>
-              <Input
-                id="name"
-                placeholder="Enter your name"
-                type="text"
-              />
+              <label>Subject</label>
+              <Input placeholder="Enter subject" />
             </div>
-            
             <div className="form-group">
-              <label htmlFor="email">Email Address</label>
-              <Input
-                id="email"
-                placeholder="Enter your email"
-                type="email"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="subject">Subject</label>
-              <Input
-                id="subject"
-                placeholder="Enter subject"
-                type="text"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="message">Message</label>
+              <label>Message</label>
               <textarea
-                id="message"
-                className="contact-textarea"
-                placeholder="Enter your message"
-                rows={5}
-              />
+                className="form-textarea"
+                placeholder="Type your message here..."
+                rows={4}
+              ></textarea>
             </div>
-            
-            <Button type="submit" className="contact-submit">
-              Send Message
-            </Button>
+            <Button type="submit">Send Message</Button>
           </form>
-          
-          <div className="contact-methods">
-            <div className="contact-method">
-              <MessageCircle size={24} />
-              <h4>Chat Support</h4>
-              <p>Available 24/7 for your queries</p>
-            </div>
-            <div className="contact-method">
-              <Mail size={24} />
-              <h4>Email</h4>
-              <p>support@equaleducation.org</p>
-            </div>
-            <div className="contact-method">
-              <Phone size={24} />
-              <h4>Phone</h4>
-              <p>+1 (123) 456-7890</p>
-            </div>
-          </div>
         </div>
       </Card>
     </div>
@@ -931,50 +894,8 @@ const StudentDashboard: React.FC = () => {
           </div>
         </>
       )}
-      {currentPage === 'about' && (
-        <>
-          <div className="dashboard-nav">
-            {[
-              { id: 'mission', label: 'Our Mission', icon: <Target /> },
-              { id: 'team', label: 'Our Team', icon: <Users /> },
-              { id: 'impact', label: 'Our Impact', icon: <Award /> },
-              { id: 'join', label: 'Join Us', icon: <UserPlus /> }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
-              >
-                {tab.icon}
-                <span>{tab.label}</span>
-              </button>
-            ))}
-          </div>
-          {renderAboutUs()}
-        </>
-      )}
-      {currentPage === 'contact' && (
-        <>
-          <div className="dashboard-nav">
-            {[
-              { id: 'message', label: 'Send Message', icon: <Mail /> },
-              { id: 'support', label: 'Support', icon: <HelpCircle /> },
-              { id: 'faq', label: 'FAQ', icon: <FileQuestion /> },
-              { id: 'feedback', label: 'Feedback', icon: <MessageSquare /> }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
-              >
-                {tab.icon}
-                <span>{tab.label}</span>
-              </button>
-            ))}
-          </div>
-          {renderContactUs()}
-        </>
-      )}
+      {currentPage === 'about' && renderAboutUs()}
+      {currentPage === 'contact' && renderContactUs()}
     </div>
   );
 };

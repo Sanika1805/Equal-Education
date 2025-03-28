@@ -39,7 +39,12 @@ const AuthService = {
     const user = this.users.find(
       u => u.email === email && u.password === password
     );
-    return user ? { ...user, id: Math.random().toString() } : null;
+    return user ? { 
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      name: user.name
+    } : null;
   },
   
   register: function(email: string, password: string, role: string) {
@@ -57,7 +62,12 @@ const AuthService = {
       createdAt: new Date()
     };
     this.users.push(newUser);
-    return newUser;
+    return {
+      id: newUser.id,
+      email: newUser.email,
+      role: newUser.role,
+      name: newUser.name
+    };
   },
   
   resetPassword: function(email: string) {
@@ -120,7 +130,7 @@ const AuthenticationPage: React.FC = () => {
   if (user) {
     return (
       <DashboardLayout userRole={user.role} onLogout={handleLogout}>
-        {user.role === 'Student' && <StudentDashboard />}
+        {user.role === 'Student' && <StudentDashboard user={user} />}
         {user.role === 'Teacher' && <TeacherDashboard user={user} />}
       </DashboardLayout>
     );
