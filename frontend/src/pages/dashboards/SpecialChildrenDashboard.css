@@ -1,6 +1,6 @@
 .special-children-dashboard {
   min-height: 100vh;
-  background-color: #f0f5ff;
+  background-color: var(--bg-color);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -10,8 +10,8 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-color: var(--card-bg);
+  box-shadow: var(--card-shadow);
   z-index: 100;
   padding: 1rem 2rem;
   display: flex;
@@ -28,7 +28,7 @@
 
 .nav-logo h1 {
   font-size: 1.75rem;
-  color: #2563eb;
+  color: var(--primary-color);
   margin: 0;
   font-weight: 600;
 }
@@ -46,7 +46,7 @@
   padding: 0.625rem 1.25rem;
   border: none;
   background: none;
-  color: #4b5563;
+  color: var(--secondary-color);
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -56,25 +56,26 @@
 }
 
 .nav-link:hover {
-  background-color: #f1f5f9;
-  color: #2563eb;
+  background-color: var(--hover-bg);
+  color: var(--primary-color);
 }
 
 .nav-link.active {
-  background-color: #e0e7ff;
-  color: #2563eb;
+  background-color: var(--active-bg);
+  color: var(--primary-color);
   font-weight: 600;
 }
 
 .nav-link.logout-button {
   margin-left: 1rem;
-  background-color: #ef4444;
+  background-color: var(--button-danger);
   color: white;
   font-weight: 500;
 }
 
 .nav-link.logout-button:hover {
-  background-color: #dc2626;
+  background-color: var(--button-danger);
+  opacity: 0.9;
 }
 
 /* Dashboard Content */
@@ -89,7 +90,7 @@
 
 /* Welcome Banner */
 .welcome-banner {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, var(--primary-color), var(--button-primary));
   color: white;
   border-radius: 12px;
   padding: 2rem;
@@ -208,13 +209,13 @@
 
 .info-label {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--secondary-color);
   font-weight: 500;
 }
 
 .info-value {
   font-size: 1rem;
-  color: #1f2937;
+  color: var(--text-color);
   font-weight: 500;
 }
 
@@ -315,11 +316,12 @@
 }
 
 .resource-card {
-  background-color: #f7fafc;
+  background-color: var(--card-bg);
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
 }
 
 .resource-card:hover {
@@ -329,17 +331,17 @@
 
 .resource-card h3 {
   font-size: 1.1rem;
-  color: #2d3748;
+  color: var(--text-color);
   margin: 0 0 0.75rem 0;
 }
 
 .resource-card p {
-  color: #4a5568;
+  color: var(--secondary-color);
   margin-bottom: 1.25rem;
 }
 
 .view-button {
-  background-color: #4299e1;
+  background-color: var(--button-primary);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -350,7 +352,7 @@
 }
 
 .view-button:hover {
-  background-color: #3182ce;
+  opacity: 0.9;
 }
 
 /* Support Services */
@@ -362,11 +364,12 @@
 }
 
 .service-card {
-  background-color: #f7fafc;
+  background-color: var(--card-bg);
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
 }
 
 .service-card:hover {
@@ -376,17 +379,17 @@
 
 .service-card h3 {
   font-size: 1.1rem;
-  color: #2d3748;
+  color: var(--text-color);
   margin: 0 0 0.75rem 0;
 }
 
 .service-card p {
-  color: #4a5568;
+  color: var(--secondary-color);
   margin-bottom: 1.25rem;
 }
 
 .connect-button {
-  background-color: #48bb78;
+  background-color: var(--button-success);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -397,7 +400,7 @@
 }
 
 .connect-button:hover {
-  background-color: #38a169;
+  opacity: 0.9;
 }
 
 /* Progress Tracking */
@@ -452,11 +455,12 @@
 }
 
 .resource-item {
-  background-color: #f7fafc;
+  background-color: var(--card-bg);
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
 }
 
 .resource-item:hover {
@@ -466,17 +470,17 @@
 
 .resource-item h4 {
   font-size: 1.1rem;
-  color: #2d3748;
+  color: var(--text-color);
   margin: 0 0 0.75rem 0;
 }
 
 .resource-item p {
-  color: #4a5568;
+  color: var(--secondary-color);
   margin-bottom: 1.25rem;
 }
 
 .access-button {
-  background-color: #4299e1;
+  background-color: var(--button-primary);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -487,7 +491,7 @@
 }
 
 .access-button:hover {
-  background-color: #3182ce;
+  opacity: 0.9;
 }
 
 /* Support Container */
@@ -514,11 +518,12 @@
 }
 
 .support-item {
-  background-color: #f7fafc;
+  background-color: var(--card-bg);
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
 }
 
 .support-item:hover {
@@ -528,12 +533,12 @@
 
 .support-item h4 {
   font-size: 1.1rem;
-  color: #2d3748;
+  color: var(--text-color);
   margin: 0 0 0.75rem 0;
 }
 
 .support-item p {
-  color: #4a5568;
+  color: var(--secondary-color);
   margin-bottom: 1.25rem;
 }
 
@@ -679,17 +684,19 @@
 .form-textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   resize: vertical;
   font-family: inherit;
   min-height: 120px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
 }
 
 .form-textarea:focus {
   outline: none;
-  border-color: #4299e1;
-  box-shadow: 0 0 0 1px #4299e1;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 1px var(--primary-color);
 }
 
 /* Responsive Design */

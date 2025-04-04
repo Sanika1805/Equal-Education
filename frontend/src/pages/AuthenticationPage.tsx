@@ -7,6 +7,7 @@ import DashboardLayout from '../components/layout/DashboardLayout';
 import StudentDashboard from './dashboards/StudentDashboard';
 import TeacherDashboard from './dashboards/TeacherDashboard';
 import SpecialChildrenDashboard from './dashboards/SpecialChildrenDashboard';
+import DonorHome from './DonorHome';
 import '../components/ui/styles.css';
 
 const UserRoles = [
@@ -77,7 +78,7 @@ const AuthService = {
   }
 };
 
-export type UserRole = 'student' | 'teacher' | 'special_children';
+export type UserRole = 'student' | 'teacher' | 'special_children' | 'donor';
 
 const AuthenticationPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -131,6 +132,12 @@ const AuthenticationPage: React.FC = () => {
   };
 
   if (user) {
+    // For donor role, redirect to registration page
+    if (user.role === 'donor') {
+      window.location.href = '/donor/register';
+      return null;
+    }
+    
     return (
       <DashboardLayout userRole={user.role} onLogout={handleLogout}>
         {user.role === 'teacher' && <TeacherDashboard user={user} />}

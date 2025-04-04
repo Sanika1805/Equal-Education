@@ -1,0 +1,148 @@
+.donation-history {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.donation-history h1 {
+  color: #333;
+  margin: 0 0 2rem 0;
+  font-size: 1.8rem;
+}
+
+.donation-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.filter-options {
+  display: flex;
+  gap: 1rem;
+}
+
+.filter-select {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+  min-width: 150px;
+}
+
+.donations-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.donation-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.donation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.donation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.donation-type {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.donation-status {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.donation-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.donation-amount {
+  font-weight: 600;
+  color: #4a90e2;
+  font-size: 1.2rem;
+}
+
+.donation-date {
+  color: #666;
+}
+
+.donation-description {
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.donation-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.action-button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+  background-color: #4a90e2;
+  color: white;
+}
+
+.action-button:hover {
+  background-color: #357abd;
+}
+
+@media (max-width: 768px) {
+  .donation-history {
+    padding: 1rem;
+  }
+
+  .donation-filters {
+    flex-direction: column;
+  }
+
+  .filter-options {
+    flex-direction: column;
+  }
+
+  .donation-actions {
+    flex-direction: column;
+  }
+
+  .action-button {
+    width: 100%;
+  }
+} 
