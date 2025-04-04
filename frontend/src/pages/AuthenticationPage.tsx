@@ -78,7 +78,7 @@ const AuthService = {
   }
 };
 
-export type UserRole = 'student' | 'teacher' | 'special_children' | 'donor';
+export type UserRole = 'student' | 'teacher' | 'special_children' | 'donor' | 'alumni' | 'parents';
 
 const AuthenticationPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -135,6 +135,12 @@ const AuthenticationPage: React.FC = () => {
     // For donor role, redirect to registration page
     if (user.role === 'donor') {
       window.location.href = '/donor/register';
+      return null;
+    }
+
+    // For alumni role, redirect to alumni registration page
+    if (user.role === 'alumni') {
+      window.location.href = '/alumni/register';
       return null;
     }
     
