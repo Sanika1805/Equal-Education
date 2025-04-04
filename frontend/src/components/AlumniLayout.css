@@ -227,10 +227,11 @@
   }
 
   .nav-links {
+    display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     gap: 0.5rem;
-  }
+    flex: 1 1;
+}
 
   .nav-item {
     flex: 1;
@@ -262,7 +263,7 @@
   }
 
   .alumni-layout {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .logout-confirm-modal {

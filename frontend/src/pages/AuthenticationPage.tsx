@@ -9,6 +9,7 @@ import TeacherDashboard from './dashboards/TeacherDashboard';
 import SpecialChildrenDashboard from './dashboards/SpecialChildrenDashboard';
 import DonorHome from './DonorHome';
 import '../components/ui/styles.css';
+import { useNavigate } from 'react-router-dom';
 
 const UserRoles = [
   { label: 'Student', value: 'student' },
@@ -87,10 +88,23 @@ const AuthenticationPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   const handleAuthentication = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // Handle role-specific redirects first
+    if (selectedRole === 'parents') {
+      navigate('/parent/login');
+      return;
+    } else if (selectedRole === 'alumni') {
+      navigate('/alumni/register');
+      return;
+    } else if (selectedRole === 'donor') {
+      navigate('/donor/register');
+      return;
+    }
 
     try {
       if (isLogin) {
@@ -129,6 +143,17 @@ const AuthenticationPage: React.FC = () => {
 
   const handleLogout = () => {
     setUser(null);
+  };
+
+  const handleRoleSelection = (role: string) => {
+    if (role === 'parent') {
+      navigate('/parent/login');
+    } else if (role === 'alumni') {
+      navigate('/alumni/register');
+    } else if (role === 'donor') {
+      navigate('/donor/register');
+    }
+    // Add other role redirects as needed
   };
 
   if (user) {

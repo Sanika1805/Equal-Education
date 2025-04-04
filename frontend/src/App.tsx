@@ -14,6 +14,9 @@ import AlumniRegistration from './pages/AlumniRegistration';
 import AlumniDashboard from './pages/AlumniDashboard';
 import AlumniProfile from './pages/AlumniProfile';
 import AlumniLayout from './components/AlumniLayout';
+import ParentLogin from './pages/ParentLogin';
+import ParentDashboard from './pages/ParentDashboard';
+import ParentLayout from './components/ParentLayout';
 import './styles/theme.css';
 
 const App: React.FC = () => {
@@ -103,6 +106,24 @@ const App: React.FC = () => {
           <DonorLayout activePage="impact">
             <DonorImpact />
           </DonorLayout>
+        } />
+
+        {/* Parent routes */}
+        <Route path="/parent/login" element={<ParentLogin />} />
+        <Route path="/parent/dashboard" element={
+          <ParentLayout activePage="dashboard">
+            <ParentDashboard />
+          </ParentLayout>
+        } />
+        <Route path="/parent/education" element={
+          <ParentLayout activePage="education">
+            <ParentDashboard />
+          </ParentLayout>
+        } />
+        <Route path="/parent/planning" element={
+          <ParentLayout activePage="planning">
+            <ParentDashboard />
+          </ParentLayout>
         } />
       </Routes>
     </Router>
