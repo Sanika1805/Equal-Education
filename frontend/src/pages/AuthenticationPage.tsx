@@ -6,21 +6,22 @@ import { Select, SelectItem } from '../components/ui/Select';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import StudentDashboard from './dashboards/StudentDashboard';
 import TeacherDashboard from './dashboards/TeacherDashboard';
+import SpecialChildrenDashboard from './dashboards/SpecialChildrenDashboard';
 import '../components/ui/styles.css';
 
 const UserRoles = [
-  'Student',
-  'Teacher',
-  'Alumni',
-  'Special Children',
-  'Parents',
-  'Donor'
+  { label: 'Student', value: 'student' },
+  { label: 'Teacher', value: 'teacher' },
+  { label: 'Special Children', value: 'special_children' },
+  { label: 'Alumni', value: 'alumni' },
+  { label: 'Parents', value: 'parents' },
+  { label: 'Donor', value: 'donor' }
 ];
 
 interface User {
   id: string;
   email: string;
-  role: string;
+  role: UserRole;
   name: string;
 }
 
@@ -29,15 +30,15 @@ const AuthService = {
   users: [] as Array<{
     email: string;
     password: string;
-    role: string;
+    role: UserRole;
     id: string;
     name: string;
     createdAt: Date;
   }>,
   
-  login: function(email: string, password: string) {
+  login: function(email: string, password: string, role: UserRole) {
     const user = this.users.find(
-      u => u.email === email && u.password === password
+      u => u.email === email && u.password === password && u.role === role
     );
     return user ? { 
       id: user.id,
@@ -47,10 +48,10 @@ const AuthService = {
     } : null;
   },
   
-  register: function(email: string, password: string, role: string) {
-    const existingUser = this.users.find(u => u.email === email);
+  register: function(email: string, password: string, role: UserRole) {
+    const existingUser = this.users.find(u => u.email === email && u.role === role);
     if (existingUser) {
-      throw new Error('User already exists');
+      throw new Error('User already exists with this email and role');
     }
     
     const newUser = { 
@@ -58,7 +59,7 @@ const AuthService = {
       password, 
       role,
       id: Math.random().toString(),
-      name: email.split('@')[0], // Using email prefix as default name
+      name: email.split('@')[0],
       createdAt: new Date()
     };
     this.users.push(newUser);
@@ -76,10 +77,12 @@ const AuthService = {
   }
 };
 
+export type UserRole = 'student' | 'teacher' | 'special_children';
+
 const AuthenticationPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
+  const [selectedRole, setSelectedRole] = useState<UserRole>('student');
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -90,19 +93,19 @@ const AuthenticationPage: React.FC = () => {
 
     try {
       if (isLogin) {
-        const loggedInUser = AuthService.login(email, password);
+        const loggedInUser = AuthService.login(email, password, selectedRole);
         if (loggedInUser) {
           setUser(loggedInUser);
         } else {
-          setError('Invalid email or password');
+          setError('Invalid email, password, or role');
         }
       } else {
-        if (!role) {
+        if (!selectedRole) {
           setError('Please select a role');
           return;
         }
 
-        const registeredUser = AuthService.register(email, password, role);
+        const registeredUser = AuthService.register(email, password, selectedRole);
         setUser(registeredUser);
       }
     } catch (error) {
@@ -130,8 +133,9 @@ const AuthenticationPage: React.FC = () => {
   if (user) {
     return (
       <DashboardLayout userRole={user.role} onLogout={handleLogout}>
-        {user.role === 'Student' && <StudentDashboard user={user} />}
-        {user.role === 'Teacher' && <TeacherDashboard user={user} />}
+        {user.role === 'teacher' && <TeacherDashboard user={user} />}
+        {user.role === 'special_children' && <SpecialChildrenDashboard user={user} />}
+        {(user.role === 'student' || !user.role) && <StudentDashboard user={user} />}
       </DashboardLayout>
     );
   }
@@ -176,12 +180,12 @@ const AuthenticationPage: React.FC = () => {
               <div className="form-group">
                 <label htmlFor="role">Select Role</label>
                 <Select 
-                  value={role} 
-                  onValueChange={setRole}
+                  value={selectedRole} 
+                  onValueChange={(value) => setSelectedRole(value as UserRole)}
                 >
-                  {UserRoles.map((userRole) => (
-                    <SelectItem key={userRole} value={userRole}>
-                      {userRole}
+                  {UserRoles.map((role) => (
+                    <SelectItem key={role.value} value={role.value}>
+                      {role.label}
                     </SelectItem>
                   ))}
                 </Select>

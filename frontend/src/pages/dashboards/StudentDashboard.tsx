@@ -23,7 +23,8 @@ import {
   UserPlus,
   HelpCircle,
   FileQuestion,
-  MessageSquare
+  MessageSquare,
+  MapPin
 } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -773,19 +774,44 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({ user }) => {
         </div>
         <div className="about-content">
           <h3>Our Mission</h3>
-          <p>To provide equal educational opportunities to all students regardless of their socioeconomic background.</p>
+          <p>To provide equal educational opportunities to all students regardless of their socioeconomic background. We believe that quality education should be accessible to everyone, and we work tirelessly to bridge the gap between privileged and underprivileged students.</p>
           
           <h3>Our Vision</h3>
-          <p>Creating a world where quality education is accessible to every student, empowering them to achieve their full potential.</p>
+          <p>Creating a world where quality education is accessible to every student, empowering them to achieve their full potential. We envision a future where no student is left behind due to financial constraints or lack of resources.</p>
           
           <h3>What We Do</h3>
           <ul>
-            <li>Connect students with qualified volunteer teachers</li>
-            <li>Provide access to quality educational resources</li>
-            <li>Facilitate scholarship opportunities</li>
-            <li>Offer mentorship and guidance</li>
-            <li>Track and support student growth</li>
+            <li>Connect students with qualified volunteer teachers who provide personalized attention</li>
+            <li>Provide access to quality educational resources through our digital library</li>
+            <li>Facilitate scholarship opportunities for deserving students</li>
+            <li>Offer mentorship and guidance from industry professionals</li>
+            <li>Track and support student growth through our innovative analytics platform</li>
+            <li>Organize community events and workshops to promote education</li>
+            <li>Partner with educational institutions to expand our reach</li>
           </ul>
+
+          <h3>Our Impact</h3>
+          <div className="impact-stats">
+            <div className="impact-stat">
+              <h4>10,000+</h4>
+              <p>Students Supported</p>
+            </div>
+            <div className="impact-stat">
+              <h4>500+</h4>
+              <p>Volunteer Teachers</p>
+            </div>
+            <div className="impact-stat">
+              <h4>200+</h4>
+              <p>Partner Schools</p>
+            </div>
+            <div className="impact-stat">
+              <h4>85%</h4>
+              <p>Success Rate</p>
+            </div>
+          </div>
+
+          <h3>Our Team</h3>
+          <p>Equal Education is led by a dedicated team of educators, technologists, and social workers who are passionate about making a difference in the lives of students. Our diverse team brings together expertise from various fields to create innovative solutions for educational challenges.</p>
         </div>
       </Card>
     </div>
@@ -801,7 +827,7 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({ user }) => {
         <div className="contact-content">
           <div className="contact-info">
             <h3>Get in Touch</h3>
-            <p>Have questions or need assistance? We're here to help!</p>
+            <p>Have questions or need assistance? We're here to help! Our support team is available Monday through Friday, 9:00 AM to 6:00 PM.</p>
             <ul>
               <li>
                 <Mail size={16} />
@@ -811,9 +837,39 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({ user }) => {
                 <Phone size={16} />
                 <span>+1 (555) 123-4567</span>
               </li>
+              <li>
+                <MapPin size={16} />
+                <span>123 Education Street, Learning City, 12345</span>
+              </li>
             </ul>
           </div>
+
+          <div className="contact-faq">
+            <h3>Frequently Asked Questions</h3>
+            <div className="faq-item">
+              <h4>How can I volunteer as a teacher?</h4>
+              <p>Visit our Volunteer Portal to register and complete the verification process. We'll match you with students based on your expertise and location.</p>
+            </div>
+            <div className="faq-item">
+              <h4>How do I apply for scholarships?</h4>
+              <p>Complete your profile and check the Scholarships section for available opportunities. Our AI-powered system will match you with relevant scholarships.</p>
+            </div>
+            <div className="faq-item">
+              <h4>Can I donate to support your mission?</h4>
+              <p>Yes! Visit our Donation page to contribute. All donations are tax-deductible and directly support student education.</p>
+            </div>
+          </div>
+
           <form className="contact-form">
+            <h3>Send Us a Message</h3>
+            <div className="form-group">
+              <label>Name</label>
+              <Input placeholder="Enter your name" />
+            </div>
+            <div className="form-group">
+              <label>Email</label>
+              <Input placeholder="Enter your email" type="email" />
+            </div>
             <div className="form-group">
               <label>Subject</label>
               <Input placeholder="Enter subject" />
