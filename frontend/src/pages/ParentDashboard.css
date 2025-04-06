@@ -36,6 +36,8 @@
 }
 
 .dashboard-content {
+  justify-content: center;
+  display: flex;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem 2rem;
