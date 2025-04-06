@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './StudentDashboard.css';
 
-const StudentDashboard = () => {
+function StudentDashboard({ user }) {
   const location = useLocation();
   const navigate = useNavigate();
   const activeTab = location.pathname.split('/student/')[1] || 'dashboard';
@@ -25,25 +25,53 @@ const StudentDashboard = () => {
     ]
   };
 
+  const studentStats = {
+    coursesEnrolled: 6,
+    upcomingAssignments: 4,
+    averageGrade: 'A-',
+    attendanceRate: '95%'
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
         return (
-          <div className="progress-overview">
-            <h2>My Progress Overview</h2>
-            <div className="progress-cards">
-              {studentData.subjects.map((subject, index) => (
-                <div key={index} className="subject-progress-card">
-                  <h3>{subject.name}</h3>
-                  <div className="progress-bar">
-                    <div 
-                      className="progress-fill" 
-                      style={{ width: `${subject.progress}%` }}
-                    />
-                  </div>
-                  <div className="grade">Grade: {subject.grade}</div>
-                </div>
-              ))}
+          <div className="dashboard-container">
+            <div className="profile-header">
+              <h1>Student Learning Portal</h1>
+              <p className="welcome-text">Welcome back, {user?.name || 'Student'}!</p>
+              <div className="role-badge">Role: Student</div>
+            </div>
+            <div className="stats-grid">
+              <div className="stat-card">
+                <h3>My Courses</h3>
+                <p>{studentStats.coursesEnrolled}</p>
+                <span>Active Courses</span>
+              </div>
+              <div className="stat-card">
+                <h3>Assignments</h3>
+                <p>{studentStats.upcomingAssignments}</p>
+                <span>Due This Week</span>
+              </div>
+              <div className="stat-card">
+                <h3>Performance</h3>
+                <p>{studentStats.averageGrade}</p>
+                <span>Average Grade</span>
+              </div>
+              <div className="stat-card">
+                <h3>Attendance</h3>
+                <p>{studentStats.attendanceRate}</p>
+                <span>Present Rate</span>
+              </div>
+            </div>
+            <div className="quick-actions">
+              <h2>Quick Actions</h2>
+              <div className="action-buttons">
+                <button>View Assignments</button>
+                <button>Join Class</button>
+                <button>Check Grades</button>
+                <button>Access Resources</button>
+              </div>
             </div>
           </div>
         );
@@ -131,6 +159,6 @@ const StudentDashboard = () => {
       </main>
     </div>
   );
-};
+}
 
 export default StudentDashboard; 

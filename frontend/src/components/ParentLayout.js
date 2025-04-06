@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './ParentLayout.css';
+import Chatbot from './Chatbot';
 
 const ParentLayout = ({ children, activePage }) => {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ const ParentLayout = ({ children, activePage }) => {
       <main className="parent-main">
         {children}
       </main>
+      <Chatbot />
     </div>
   );
 };

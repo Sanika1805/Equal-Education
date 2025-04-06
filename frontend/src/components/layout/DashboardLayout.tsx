@@ -15,20 +15,20 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 }) => {
   const getRoleTitle = (role: string) => {
     switch (role) {
-      case 'Student':
-        return 'Student Dashboard';
-      case 'Teacher':
-        return 'Teacher Dashboard';
-      case 'Alumni':
-        return 'Alumni Dashboard';
-      case 'Special Children':
-        return 'Special Children Dashboard';
-      case 'Parents':
-        return 'Parent Dashboard';
-      case 'Donor':
-        return 'Donor Dashboard';
+      case 'student':
+        return 'Student Learning Portal';
+      case 'teacher':
+        return 'Educator Portal';
+      case 'special_children':
+        return 'Special Learning Portal';
+      case 'alumni':
+        return 'Alumni Network';
+      case 'parents':
+        return 'Parent Portal';
+      case 'donor':
+        return 'Donor Space';
       default:
-        return 'Dashboard';
+        return 'Welcome';
     }
   };
 
