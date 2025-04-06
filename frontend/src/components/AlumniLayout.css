@@ -41,7 +41,8 @@
 
 .nav-links {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  /* flex-direction: column; */
   gap: 0.5rem;
   flex: 1;
 }
