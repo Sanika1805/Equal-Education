@@ -483,6 +483,7 @@
 }
 
 .dashboard-nav {
+  visibility: hidden;
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
